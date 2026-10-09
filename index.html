@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="pt-BR" class="no-js">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mente em Sintonia</title>
+  <meta name="description" content="Encontre psicólogos que combinam com você, suas necessidades e o que importa na sua jornada. Menos tempo procurando, mais facilidade para encontrar.">
+  <meta name="theme-color" content="#161E52">
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+  <script>
+    // Marca que o JavaScript está ativo e garante que nada fique escondido
+    // caso algum script falhe (as intros revelam o conteúdo antes disso).
+    (function (raiz) {
+      raiz.classList.remove('no-js');
+      raiz.classList.add('js');
+      raiz.lang = 'pt-BR';
+      setTimeout(function () { raiz.classList.add('pronto'); }, 3000);
+    })(document.documentElement);
+  </script>
+
+  <!-- Bibliotecas de animação (CDN). A página funciona sem elas, só que estática. -->
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/animejs@4.5.0/dist/bundles/anime.umd.min.js"></script>
+
+  <!-- Código da página -->
+  <script defer src="js/dados.js"></script>
+  <script defer src="js/retratos.js"></script>
+  <script defer src="js/sinal.js"></script>
+  <script defer src="js/baralho.js"></script>
+  <script defer src="js/demo.js"></script>
+  <script defer src="script.js"></script>
+</head>
+<body>
+  <a class="pular" href="#conteudo">pular para o conteúdo</a>
+
+  <!-- Ícones vetoriais (usados com <use href="#i-...">) -->
+  <svg class="sprite" aria-hidden="true" focusable="false">
+    <defs>
+      <pattern id="retícula" width="5" height="5" patternUnits="userSpaceOnUse">
+        <circle cx="1.2" cy="1.2" r=".85" fill="#161E52" />
+      </pattern>
+    </defs>
+    <symbol id="i-x" viewBox="0 0 24 24"><path d="M6.5 6.5l11 11M17.5 6.5l-11 11" /></symbol>
+    <symbol id="i-voltar" viewBox="0 0 24 24"><path d="M9 14L4 9l5-5" /><path d="M4 9h10.5a5.5 5.5 0 010 11H11" /></symbol>
+    <symbol id="i-direita" viewBox="0 0 24 24"><path d="M9.5 5.5L16 12l-6.5 6.5" /></symbol>
+    <symbol id="i-esquerda" viewBox="0 0 24 24"><path d="M14.5 5.5L8 12l6.5 6.5" /></symbol>
+    <symbol id="i-video" viewBox="0 0 24 24"><rect x="3" y="6.5" width="12.5" height="11" rx="2.5" /><path d="M15.5 10.5l5-3v9l-5-3" /></symbol>
+    <symbol id="i-pino" viewBox="0 0 24 24"><path d="M12 21s-6.5-6-6.5-11.2a6.5 6.5 0 0113 0C18.5 15 12 21 12 21z" /><circle cx="12" cy="9.8" r="2.4" /></symbol>
+    <symbol id="i-relogio" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 7.5V12l3 2" /></symbol>
+    <symbol id="i-globo" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M3.5 12h17M12 3.5c2.6 2.4 3.9 5.2 3.9 8.5s-1.3 6.1-3.9 8.5c-2.6-2.4-3.9-5.2-3.9-8.5s1.3-6.1 3.9-8.5z" /></symbol>
+    <symbol id="i-livro" viewBox="0 0 24 24"><path d="M12 6.5c-2.8-1.6-5.8-1.9-8.5-1v13c2.7-.9 5.7-.6 8.5 1 2.8-1.6 5.8-1.9 8.5-1v-13c-2.7-.9-5.7-.6-8.5 1zM12 6.5v13" /></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" /></symbol>
+    <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5" /><path d="M12 11v5.5" /><path d="M12 7.6v.2" /></symbol>
+    <symbol id="i-grade" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="6.5" height="6.5" rx="1.5" /><rect x="14" y="3.5" width="6.5" height="6.5" rx="1.5" /><rect x="3.5" y="14" width="6.5" height="6.5" rx="1.5" /><rect x="14" y="14" width="6.5" height="6.5" rx="1.5" /></symbol>
+    <symbol id="i-abas" viewBox="0 0 24 24"><rect x="3" y="7.5" width="13" height="12" rx="2" /><path d="M7.5 7.5V5.5a2 2 0 012-2H19a2 2 0 012 2V14a2 2 0 01-2 2h-3" /></symbol>
+    <symbol id="i-balao" viewBox="0 0 24 24"><path d="M4 6.5A2.5 2.5 0 016.5 4h11A2.5 2.5 0 0120 6.5v7a2.5 2.5 0 01-2.5 2.5H11l-4.5 4v-4h0A2.5 2.5 0 014 13.5z" /><path d="M8.5 9h7M8.5 12h4" /></symbol>
+    <symbol id="i-onda" viewBox="0 0 24 24"><path d="M2 12c2.5-6 5-6 7.5 0s5 6 7.5 0 3.4-4.2 5-2.5" /></symbol>
+    <symbol id="i-pessoa" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.8" /><path d="M4.5 20.5c.8-4 3.8-6.3 7.5-6.3s6.7 2.3 7.5 6.3" /></symbol>
+    <symbol id="i-lupa" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" /><path d="M15.5 15.5L20.5 20.5" /></symbol>
+    <symbol id="i-acima" viewBox="0 0 24 24"><path d="M12 19V5.5M6 11l6-6 6 6" /></symbol>
+    <symbol id="i-maleta" viewBox="0 0 24 24"><rect x="3.5" y="7.5" width="17" height="12" rx="2.5" /><path d="M9 7.5V6a2 2 0 012-2h2a2 2 0 012 2v1.5M3.5 12.5h17" /></symbol>
+    <symbol id="i-sliders" viewBox="0 0 24 24"><path d="M4 7h9M17 7h3M4 17h3M11 17h9" /><circle cx="15" cy="7" r="2" /><circle cx="9" cy="17" r="2" /></symbol>
+  </svg>
+
+  <!-- ===================== Cabeçalho com o "sintonizador" ===================== -->
+  <header class="topo" data-topo data-tom="claro">
+    <div class="topo__barra">
+      <a class="marca" href="#inicio" aria-label="Mente em Sintonia, voltar ao início" data-marca>
+        <svg class="marca__simbolo" viewBox="0 0 44 24" aria-hidden="true">
+          <circle class="marca__voce" cx="5" cy="12" r="4" />
+          <path class="marca__onda" d="M10 12 C13 4.5 17 4.5 22 12 S31 19.5 34 12" />
+          <circle class="marca__psi" cx="39" cy="12" r="4" />
+        </svg>
+        <span class="marca__nome">mente em sintonia</span>
+      </a>
+
+      <nav class="dial" aria-label="Seções da página" data-dial>
+        <ol class="dial__estacoes">
+          <li><a href="#inicio" data-estacao="inicio">início</a></li>
+          <li><a href="#problema" data-estacao="problema">o problema</a></li>
+          <li><a href="#como-funciona" data-estacao="como-funciona">como funciona</a></li>
+          <li><a href="#demo" data-estacao="demo">demonstração</a></li>
+          <li><a href="#para-quem" data-estacao="para-quem">para quem é</a></li>
+          <li><a href="#match" data-estacao="match">match</a></li>
+        </ol>
+        <div class="dial__escala" aria-hidden="true" data-dial-escala>
+          <span class="dial__agulha" data-dial-agulha></span>
+        </div>
+      </nav>
+
+      <div class="topo__acoes">
+        <a class="topo__link" href="#para-psicologos">sou psicólogo</a>
+        <a class="botao botao--primario botao--p" href="#demo" data-botao>
+          <span class="botao__rotulo">encontrar meu match</span>
+        </a>
+        <button class="topo__menu" type="button" aria-expanded="false" aria-controls="menu" data-menu-abrir>
+          <span class="topo__menu-linhas" aria-hidden="true"><i></i><i></i></span>
+          <span class="topo__menu-txt">menu</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Menu de navegação (telas menores) -->
+  <div class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" hidden data-menu>
+    <div class="menu__fundo" data-menu-fundo></div>
+    <div class="menu__painel">
+      <div class="menu__topo">
+        <span class="menu__marca">mente em sintonia</span>
+        <button class="menu__fechar" type="button" data-menu-fechar>
+          <svg class="icone" aria-hidden="true"><use href="#i-x" /></svg>
+          <span>fechar</span>
+        </button>
+      </div>
+      <nav aria-label="Seções da página">
+        <ol class="menu__lista">
+          <li><a href="#inicio" data-estacao="inicio"><span class="menu__freq">início</span></a></li>
+          <li><a href="#problema" data-estacao="problema"><span class="menu__freq">o problema</span></a></li>
+          <li><a href="#como-funciona" data-estacao="como-funciona"><span class="menu__freq">como funciona</span></a></li>
+          <li><a href="#demo" data-estacao="demo"><span class="menu__freq">demonstração</span></a></li>
+          <li><a href="#para-quem" data-estacao="para-quem"><span class="menu__freq">para quem é</span></a></li>
+          <li><a href="#match" data-estacao="match"><span class="menu__freq">match</span></a></li>
+        </ol>
+      </nav>
+      <div class="menu__acoes">
+        <a class="botao botao--lilas" href="#demo" data-botao><span class="botao__rotulo">encontrar meu match</span></a>
+        <a class="botao botao--contorno-claro" href="#para-psicologos"><span class="botao__rotulo">sou psicólogo</span></a>
+      </div>
+    </div>
+  </div>
+
+  <main id="conteudo" tabindex="-1">
+
+    <!-- ===================== 1. Hero ===================== -->
+    <section class="hero" id="inicio" data-tom="claro" aria-labelledby="hero-titulo" data-hero>
+      <div class="hero__grade">
+        <h1 class="hero__titulo" id="hero-titulo">
+          <span class="sr-only">encontrar o psicólogo certo também pode ser um match.</span>
+          <span class="hero__a" aria-hidden="true" data-intro data-split>encontrar o psicólogo certo</span>
+          <span class="hero__b" aria-hidden="true" data-intro data-split>também pode ser um <span class="match" data-match><span class="match__eco" data-match-eco>match.</span><span class="match__txt">match.</span></span></span>
+        </h1>
+
+        <div class="hero__busca busca" data-intro data-busca>
+          <p class="busca__titulo">
+            <svg class="icone" aria-hidden="true"><use href="#i-sliders" /></svg>
+            o que você contou
+          </p>
+          <ul class="busca__itens">
+            <li class="busca__item" data-chave="abordagem:tcc"><span>abordagem TCC</span><i class="busca__ponto" aria-hidden="true"></i></li>
+            <li class="busca__item" data-chave="formato:online"><span>atendimento online</span><i class="busca__ponto" aria-hidden="true"></i></li>
+            <li class="busca__item" data-chave="tema:ansiedade"><span>ansiedade</span><i class="busca__ponto" aria-hidden="true"></i></li>
+            <li class="busca__item" data-chave="tema:carreira"><span>carreira e trabalho</span><i class="busca__ponto" aria-hidden="true"></i></li>
+          </ul>
+          <p class="busca__resumo" data-busca-resumo aria-live="polite"></p>
+        </div>
+
+        <div class="hero__palco" data-intro>
+          <div class="baralho baralho--hero" data-hero-baralho role="group" aria-roledescription="pilha de perfis" aria-label="Exemplo de perfis em sintonia com a busca ao lado">
+            <!-- cartões gerados por js/baralho.js a partir de js/dados.js -->
+          </div>
+          <p class="hero__nota">Índice ilustrativo. Demonstração conceitual, não é uma avaliação clínica.</p>
+        </div>
+
+        <svg class="hero__fios" aria-hidden="true" data-hero-fios></svg>
+
+        <div class="hero__texto" data-intro>
+          <p class="hero__apoio">Descubra profissionais que combinam com você, suas necessidades e o que realmente importa na sua jornada.</p>
+          <div class="hero__acoes">
+            <a class="botao botao--primario botao--g" href="#demo" data-botao>
+              <svg class="botao__onda" viewBox="0 0 26 12" aria-hidden="true"><path d="M1 6 C3 6 5 6 7 6 S11 6 13 6 S17 6 19 6 S23 6 25 6" /></svg>
+              <span class="botao__rotulo">encontrar meu match</span>
+            </a>
+            <a class="botao botao--secundario botao--g" href="#para-psicologos" data-botao>
+              <span class="botao__rotulo">sou psicólogo</span>
+            </a>
+          </div>
+        </div>
+
+        <div class="hero__regua regua" data-intro>
+          <span class="regua__ponta">menos tempo procurando.</span>
+          <div class="regua__escala" aria-hidden="true" data-regua>
+            <span class="regua__agulha" data-regua-agulha></span>
+          </div>
+          <span class="regua__ponta regua__ponta--fim">mais facilidade para encontrar.</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 2. O problema ===================== -->
+    <section class="problema" id="problema" data-tom="claro" aria-labelledby="problema-titulo" data-problema>
+      <div class="problema__topo">
+        <h2 class="titulo-l problema__titulo" id="problema-titulo">
+          <span class="sr-only">o problema não é encontrar um psicólogo. é encontrar o psicólogo certo.</span>
+          <span class="problema__t1" aria-hidden="true" data-split>o problema não é encontrar um psicólogo.</span>
+          <span class="problema__t2" aria-hidden="true" data-split>é encontrar o psicólogo certo.</span>
+        </h2>
+        <p class="problema__intro">Hoje a busca costuma juntar listas enormes, abas abertas e indicações de conhecidos. Sobra informação e falta um jeito claro de escolher.</p>
+      </div>
+
+      <div class="ruido" data-ruido>
+        <!-- O "ruído": fragmentos de uma busca comum. Ilustrativo, por isso escondido de leitores de tela. -->
+        <div class="ruido__campo" aria-hidden="true" data-ruido-campo>
+          <!-- grupo A: muitas opções -->
+          <div class="frag frag--resultados" data-grupo="a" data-frag style="--x:1%;--y:2%;--r:-3deg">
+            <div class="frag__busca"><svg class="icone"><use href="#i-lupa" /></svg> psicólogo perto de mim</div>
+            <p class="frag__meta">1.284 resultados</p>
+            <div class="frag__grade"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          </div>
+          <div class="frag frag--paginas" data-grupo="a" data-frag style="--x:5%;--y:66%;--r:4deg">
+            <span>1</span><span>2</span><span>3</span><span>…</span><span>86</span>
+            <svg class="icone"><use href="#i-direita" /></svg>
+          </div>
+          <div class="frag frag--ordem" data-grupo="a" data-frag style="--x:15%;--y:44%;--r:-6deg">ordenar por: relevância</div>
+
+          <!-- grupo B: informações espalhadas -->
+          <div class="frag frag--abas" data-grupo="b" data-frag style="--x:33%;--y:6%;--r:2deg">
+            <span>abordagens: qual a diferença?</span><span>valor da sessão</span><span>atende online?</span><span class="frag__mais">+9</span>
+          </div>
+          <div class="frag frag--nota" data-grupo="b" data-frag style="--x:40%;--y:22%;--r:-4deg">
+            <p class="frag__nota-titulo">opções</p>
+            <p><s>Ana: sem horário</s></p>
+            <p>indicação da tia: presencial?</p>
+            <p><s>clínica do centro</s></p>
+            <p>ver de novo amanhã</p>
+          </div>
+          <div class="frag frag--mapa" data-grupo="b" data-frag style="--x:51%;--y:46%;--r:5deg">
+            <svg viewBox="0 0 120 70"><path d="M0 48 C22 40 34 58 60 44 S98 30 120 38" /><path d="M14 0 L30 70 M78 0 L66 70" /></svg>
+            <i style="--px:22%;--py:30%"></i><i style="--px:58%;--py:52%"></i><i style="--px:80%;--py:22%"></i>
+          </div>
+
+          <!-- grupo C: buscas soltas -->
+          <div class="frag frag--balao" data-grupo="c" data-frag style="--x:67%;--y:3%;--r:-2deg">conhece algum psicólogo bom?</div>
+          <div class="frag frag--balao frag--balao-eu" data-grupo="c" data-frag style="--x:74%;--y:18%;--r:3deg">a minha é ótima, mas não atende online</div>
+          <div class="frag frag--pesquisa" data-grupo="c" data-frag style="--x:64%;--y:38%;--r:-4deg">
+            <svg class="icone"><use href="#i-lupa" /></svg> psicólogo ansiedade online à noite<i></i>
+          </div>
+          <div class="frag frag--tempo" data-grupo="c" data-frag style="--x:79%;--y:58%;--r:6deg">
+            <svg class="icone"><use href="#i-relogio" /></svg> última busca: há 3 semanas
+          </div>
+        </div>
+
+        <ul class="ruido__lista">
+          <li class="ruido__item" data-grupo-item="a">
+            <svg class="icone ruido__icone" aria-hidden="true"><use href="#i-grade" /></svg>
+            <h3 class="ruido__titulo">muitas opções</h3>
+            <p>Muitas opções disponíveis, mas sem um caminho claro de escolha.</p>
+          </li>
+          <li class="ruido__item" data-grupo-item="b">
+            <svg class="icone ruido__icone" aria-hidden="true"><use href="#i-abas" /></svg>
+            <h3 class="ruido__titulo">informações espalhadas</h3>
+            <p>Dados em lugares diferentes, difíceis de reunir e comparar.</p>
+          </li>
+          <li class="ruido__item" data-grupo-item="c">
+            <svg class="icone ruido__icone" aria-hidden="true"><use href="#i-balao" /></svg>
+            <h3 class="ruido__titulo">buscas soltas</h3>
+            <p>Buscas e recomendações soltas que tornam o processo demorado e incerto.</p>
+          </li>
+        </ul>
+      </div>
+
+      <div class="sinal-ponte" aria-hidden="true" data-ponte>
+        <svg class="sinal-ponte__svg" viewBox="0 0 1200 120" preserveAspectRatio="none"><path data-ponte-linha d="M0 60 H1200" /></svg>
+      </div>
+      <p class="problema__ponte" data-ponte-txt>E se o caminho fosse outro?</p>
+    </section>
+
+    <!-- ===================== 3. Como funciona ===================== -->
+    <section class="como" id="como-funciona" data-tom="escuro" aria-labelledby="como-titulo" data-como>
+      <div class="como__cabeca">
+        <h2 class="titulo-l como__titulo" id="como-titulo">
+          <span class="sr-only">e se encontrar um psicólogo fosse como encontrar um match?</span>
+          <span aria-hidden="true" data-split>e se encontrar um psicólogo fosse como encontrar um match?</span>
+        </h2>
+        <p class="como__intro">Em vez de procurar sozinho, você conta o que procura e a plataforma aproxima perfis compatíveis. A escolha continua sendo sua.</p>
+      </div>
+
+      <div class="como__corpo">
+        <ol class="passos" data-passos>
+          <li class="passo" data-passo="0">
+            <span class="passo__num" aria-hidden="true">01</span>
+            <h3 class="passo__titulo">você conta o que procura</h3>
+            <p class="passo__texto">Temas que quer trabalhar, formato de atendimento, abordagem, horários e o que mais importa para você.</p>
+            <div class="passo__tela" data-passo-tela aria-hidden="true"></div>
+          </li>
+          <li class="passo" data-passo="1">
+            <span class="passo__num" aria-hidden="true">02</span>
+            <h3 class="passo__titulo">a plataforma encontra combinações</h3>
+            <p class="passo__texto">Suas respostas são cruzadas com o que cada profissional informa sobre como trabalha.</p>
+            <div class="passo__tela" data-passo-tela aria-hidden="true"></div>
+          </li>
+          <li class="passo" data-passo="2">
+            <span class="passo__num" aria-hidden="true">03</span>
+            <h3 class="passo__titulo">você conhece os profissionais</h3>
+            <p class="passo__texto">Apresentação, abordagem e formato de atendimento lado a lado, sem abas espalhadas.</p>
+            <div class="passo__tela" data-passo-tela aria-hidden="true"></div>
+          </li>
+          <li class="passo" data-passo="3">
+            <span class="passo__num" aria-hidden="true">04</span>
+            <h3 class="passo__titulo">você escolhe seu match</h3>
+            <p class="passo__texto">Você decide com quem quer conversar. A plataforma sugere; a escolha é sempre sua.</p>
+            <div class="passo__tela" data-passo-tela aria-hidden="true"></div>
+          </li>
+        </ol>
+
+        <!-- Aparelho "sintonizador": ilustra a etapa ativa (decorativo) -->
+        <div class="sintonizador" aria-hidden="true" data-sintonizador>
+          <div class="sintonizador__caixa">
+            <div class="sintonizador__topo">
+              <span class="sintonizador__led" data-led></span>
+              <span class="sintonizador__status" data-status>sintonizando você</span>
+              <span class="sintonizador__canal" data-canal>etapa 1 de 4</span>
+            </div>
+
+            <div class="sintonizador__dial">
+              <div class="sintonizador__escala" data-escala></div>
+              <ol class="sintonizador__estacoes">
+                <li>você</li><li>combinações</li><li>perfis</li><li>match</li>
+              </ol>
+              <span class="sintonizador__agulha" data-agulha></span>
+            </div>
+
+            <div class="sintonizador__tela-onda">
+              <svg viewBox="0 0 600 170" preserveAspectRatio="none" data-osc>
+                <g class="osc__grade"><path d="M0 85 H600" /><path d="M150 0 V170 M300 0 V170 M450 0 V170" /></g>
+                <g data-osc-cands></g>
+                <path class="osc__voce" data-osc-voce d="M0 85 H600" />
+                <circle class="osc__trava" data-osc-trava cx="300" cy="85" r="16" />
+              </svg>
+              <span class="osc__legenda osc__legenda--voce">você</span>
+              <span class="osc__legenda osc__legenda--psi" data-osc-legenda-psi>profissionais</span>
+            </div>
+
+            <div class="sintonizador__telas" data-telas>
+              <!-- tela 1 -->
+              <div class="tela tela--1" data-tela="0">
+                <p class="tela__pergunta">o que você procura?</p>
+                <div class="tela__chips">
+                  <span class="tela__chip" data-chip>ansiedade</span>
+                  <span class="tela__chip" data-chip>carreira</span>
+                  <span class="tela__chip" data-chip>online</span>
+                  <span class="tela__chip" data-chip>à noite</span>
+                  <span class="tela__cursor" data-chip></span>
+                </div>
+              </div>
+              <!-- tela 2 -->
+              <div class="tela tela--2" data-tela="1">
+                <div class="tela__grade" data-grade-perfis></div>
+                <p class="tela__contagem"><strong data-contagem>5</strong> combinações para conhecer</p>
+              </div>
+              <!-- tela 3 -->
+              <div class="tela tela--3" data-tela="2">
+                <div class="tela__trio" data-trio></div>
+              </div>
+              <!-- tela 4 -->
+              <div class="tela tela--4" data-tela="3">
+                <div class="tela__escolha" data-escolha></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== 4. Demonstração ===================== -->
+    <section class="demo" id="demo" data-tom="claro" aria-labelledby="demo-titulo" data-demo>
+      <div class="demo__cabeca">
+        <h2 class="titulo-l demo__titulo" id="demo-titulo">
+          <span class="sr-only">seu match começa aqui.</span>
+          <span aria-hidden="true" data-split>seu match começa aqui.</span>
+        </h2>
+        <p class="demo__intro">Experimente: marque o que importa para você e veja os perfis se reorganizarem. Todos os perfis são fictícios e nada do que você marcar sai desta página.</p>
+      </div>
+
+      <div class="app" data-app>
+        <div class="app__barra">
+          <span class="app__marca">
+            <svg class="app__simbolo" viewBox="0 0 44 24" aria-hidden="true"><circle cx="5" cy="12" r="4" /><path d="M10 12 C13 4.5 17 4.5 22 12 S31 19.5 34 12" /><circle cx="39" cy="12" r="4" /></svg>
+            sua busca
+          </span>
+          <span class="app__selo">demonstração com perfis fictícios</span>
+        </div>
+
+        <div class="app__grade">
+          <form class="prefs" data-prefs aria-label="Suas preferências" novalidate>
+            <!-- grupos gerados por js/demo.js a partir de js/dados.js -->
+            <noscript><p class="prefs__aviso">Ative o JavaScript para experimentar a demonstração.</p></noscript>
+          </form>
+
+          <div class="resultados" id="perfis" data-resultados>
+            <div class="resultados__topo">
+              <p class="resultados__resumo" data-resumo>6 perfis ordenados pela sintonia com suas escolhas</p>
+              <button class="resultados__info" type="button" aria-expanded="false" aria-controls="como-calcula" data-info>
+                <svg class="icone" aria-hidden="true"><use href="#i-info" /></svg>
+                como é calculado?
+              </button>
+            </div>
+            <p class="resultados__explica" id="como-calcula" hidden data-info-texto>
+              O índice compara só as preferências marcadas aqui com informações fictícias de cada perfil: temas em comum, formato, abordagem e o que mais você marcou. É ilustrativo, não avalia ninguém e não diz qual profissional é o melhor para você.
+            </p>
+
+            <div class="baralho baralho--demo" data-demo-baralho role="group" aria-roledescription="pilha de perfis" aria-label="Perfis em sintonia com suas escolhas" tabindex="0">
+              <!-- cartões gerados por js/baralho.js -->
+            </div>
+
+            <div class="baralho__controles">
+              <button class="controle" type="button" data-anterior>
+                <svg class="icone" aria-hidden="true"><use href="#i-voltar" /></svg>
+                <span>voltar</span>
+              </button>
+              <button class="controle controle--passar" type="button" data-passar>
+                <svg class="icone" aria-hidden="true"><use href="#i-x" /></svg>
+                <span>passar</span>
+              </button>
+              <button class="botao botao--primario controle--conhecer" type="button" data-conhecer data-botao>
+                <span class="botao__rotulo">conhecer perfil</span>
+              </button>
+            </div>
+            <p class="baralho__posicao" data-posicao aria-live="polite"></p>
+
+            <ol class="miniaturas" data-miniaturas aria-label="Todos os perfis da demonstração"></ol>
+          </div>
+        </div>
+      </div>
+      <p class="demo__nota">O índice de sintonia é ilustrativo: compara apenas as preferências marcadas acima com informações fictícias dos perfis. Não é avaliação clínica e não substitui a sua escolha.</p>
+    </section>
+
+    <!-- ===================== 5. Para quem é ===================== -->
+    <section class="publicos" id="para-quem" aria-labelledby="publicos-titulo" data-tom="claro" data-publicos>
+      <div class="publicos__encontro" aria-hidden="true" data-encontro>
+        <svg class="encontro__svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
+          <path class="encontro__onda encontro__onda--a" data-onda-a d="M0 60 H600" />
+          <path class="encontro__onda encontro__onda--b" data-onda-b d="M600 60 H1200" />
+        </svg>
+        <span class="encontro__no" data-no>
+          <svg viewBox="0 0 44 24"><circle cx="5" cy="12" r="4" /><path d="M10 12 C13 4.5 17 4.5 22 12 S31 19.5 34 12" /><circle cx="39" cy="12" r="4" /></svg>
+        </span>
+      </div>
+      <h2 class="publicos__titulo" id="publicos-titulo">dois lados, a mesma frequência.</h2>
+
+      <div class="publicos__grade">
+        <article class="lado lado--busca" data-lado="busca">
+          <p class="lado__rotulo">
+            <svg class="icone" aria-hidden="true"><use href="#i-pessoa" /></svg>
+            para quem procura
+          </p>
+          <h3 class="lado__titulo">você diz o que importa. a gente aproxima quem combina.</h3>
+          <p class="lado__texto">Para pessoas que desejam encontrar profissionais alinhados às suas necessidades, interesses e preferências.</p>
+          <ul class="lado__lista">
+            <li><svg class="icone" aria-hidden="true"><use href="#i-check" /></svg>Conte o que procura com palavras simples, sem precisar saber termos técnicos.</li>
+            <li><svg class="icone" aria-hidden="true"><use href="#i-check" /></svg>Veja apresentação, abordagem e formato de cada profissional no mesmo lugar.</li>
+            <li><svg class="icone" aria-hidden="true"><use href="#i-check" /></svg>Compare com calma e escolha no seu tempo.</li>
+          </ul>
+          <a class="botao botao--primario botao--g" href="#demo" data-botao>
+            <svg class="botao__onda" viewBox="0 0 26 12" aria-hidden="true"><path d="M1 6 C3 6 5 6 7 6 S11 6 13 6 S17 6 19 6 S23 6 25 6" /></svg>
+            <span class="botao__rotulo">encontrar meu match</span>
+          </a>
+        </article>
+
+        <article class="lado lado--psi" id="para-psicologos" data-lado="psi" tabindex="-1">
+          <p class="lado__rotulo">
+            <svg class="icone" aria-hidden="true"><use href="#i-maleta" /></svg>
+            para psicólogos
+          </p>
+          <h3 class="lado__titulo">seu trabalho, apresentado para quem procura por ele.</h3>
+          <p class="lado__texto">Para profissionais que desejam apresentar seu trabalho e alcançar pessoas interessadas em suas especialidades.</p>
+          <ul class="lado__lista">
+            <li><svg class="icone" aria-hidden="true"><use href="#i-check" /></svg>Mostre como você trabalha, não só uma lista de especialidades.</li>
+            <li><svg class="icone" aria-hidden="true"><use href="#i-check" /></svg>Apareça para pessoas que buscam os temas que você atende.</li>
+            <li><svg class="icone" aria-hidden="true"><use href="#i-check" /></svg>Informe formato, horários e abordagem do seu jeito.</li>
+          </ul>
+          <a class="botao botao--lilas botao--g" href="#cadastro-psicologos" data-cadastro-psi data-botao>
+            <span class="botao__rotulo">quero apresentar meu trabalho</span>
+          </a>
+        </article>
+      </div>
+    </section>
+
+    <!-- ===================== 6. Encerramento ===================== -->
+    <section class="final" id="match" data-tom="escuro" aria-labelledby="final-titulo" data-final>
+      <h2 class="final__titulo" id="final-titulo">
+        <span class="sr-only">seu próximo psicólogo pode estar a um match de distância.</span>
+        <span aria-hidden="true" data-split-final>seu próximo psicólogo pode estar a um <span class="match match--escuro" data-match><span class="match__eco" data-match-eco>match</span><span class="match__txt">match</span></span> de distância.</span>
+      </h2>
+      <div class="final__ondas" aria-hidden="true">
+        <svg viewBox="0 0 1440 220" preserveAspectRatio="none" data-final-ondas>
+          <path class="final__onda final__onda--a" data-final-a d="M0 110 H1440" />
+          <path class="final__onda final__onda--b" data-final-b d="M0 110 H1440" />
+        </svg>
+      </div>
+      <p class="final__verbos" data-verbos><span>encontre.</span> <span>conheça.</span> <span>escolha.</span></p>
+      <a class="botao botao--lilas botao--g final__cta" href="#demo" data-botao>
+        <svg class="botao__onda" viewBox="0 0 26 12" aria-hidden="true"><path d="M1 6 C3 6 5 6 7 6 S11 6 13 6 S17 6 19 6 S23 6 25 6" /></svg>
+        <span class="botao__rotulo">encontrar meu match</span>
+      </a>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__grade">
+      <div class="rodape__marca">
+        <svg class="marca__simbolo" viewBox="0 0 44 24" aria-hidden="true"><circle class="marca__voce" cx="5" cy="12" r="4" /><path class="marca__onda" d="M10 12 C13 4.5 17 4.5 22 12 S31 19.5 34 12" /><circle class="marca__psi" cx="39" cy="12" r="4" /></svg>
+        <p><strong>mente em sintonia</strong><br>Menos tempo procurando. Mais facilidade para encontrar.</p>
+      </div>
+      <nav class="rodape__nav" aria-label="Rodapé">
+        <a href="#como-funciona">como funciona</a>
+        <a href="#demo">demonstração</a>
+        <a href="#para-psicologos">para psicólogos</a>
+        <a href="#inicio">voltar ao topo</a>
+      </nav>
+      <div class="rodape__avisos">
+        <p>Em situação de crise ou risco, procure ajuda imediata: CVV pelo 188 (24 horas, gratuito) ou SAMU pelo 192.</p>
+        <p>Perfis, nomes e índices exibidos nesta página são fictícios e servem apenas para demonstração.</p>
+      </div>
+    </div>
+    <p class="rodape__base">© 2026 Mente em Sintonia</p>
+  </footer>
+
+  <!-- ===================== Diálogos ===================== -->
+  <dialog class="perfil" id="perfil" aria-labelledby="perfil-nome" data-perfil>
+    <div class="perfil__painel" data-perfil-painel>
+      <button class="perfil__fechar" type="button" data-perfil-fechar>
+        <svg class="icone" aria-hidden="true"><use href="#i-x" /></svg>
+        <span class="sr-only">fechar perfil</span>
+      </button>
+      <div class="perfil__foto" data-perfil-foto></div>
+      <div class="perfil__info">
+        <p class="perfil__selo">perfil fictício para demonstração</p>
+        <h3 class="perfil__nome" id="perfil-nome" data-perfil-nome>Nome</h3>
+        <p class="perfil__papel" data-perfil-papel></p>
+        <dl class="perfil__dados" data-perfil-dados></dl>
+        <div class="perfil__bloco">
+          <h4>temas que atende</h4>
+          <ul class="etiquetas" data-perfil-temas></ul>
+        </div>
+        <div class="perfil__bloco">
+          <h4>sobre</h4>
+          <p data-perfil-sobre></p>
+        </div>
+        <div class="perfil__bloco">
+          <h4>como costuma ser a primeira conversa</h4>
+          <p data-perfil-primeira></p>
+        </div>
+        <div class="perfil__sintonia" data-perfil-sintonia></div>
+        <div class="perfil__acoes" data-perfil-acoes>
+          <button class="botao botao--primario" type="button" data-escolher data-botao>
+            <svg class="botao__onda" viewBox="0 0 26 12" aria-hidden="true"><path d="M1 6 C3 6 5 6 7 6 S11 6 13 6 S17 6 19 6 S23 6 25 6" /></svg>
+            <span class="botao__rotulo">escolher como meu match</span>
+          </button>
+          <button class="botao botao--secundario" type="button" data-perfil-fechar>
+            <span class="botao__rotulo">voltar aos perfis</span>
+          </button>
+        </div>
+        <div class="perfil__match" data-perfil-match hidden>
+          <div class="perfil__match-visual" aria-hidden="true">
+            <span class="perfil__voce">você</span>
+            <svg viewBox="0 0 160 40" data-match-ondas><path class="pm-a" d="M0 20 H160" /><path class="pm-b" d="M0 20 H160" /></svg>
+            <span class="perfil__psi-mini" data-perfil-mini></span>
+          </div>
+          <p class="perfil__match-titulo" tabindex="-1" data-match-titulo>vocês estão em sintonia.</p>
+          <p class="perfil__match-texto" data-match-texto></p>
+          <div class="perfil__acoes">
+            <button class="botao botao--lilas" type="button" data-perfil-fechar><span class="botao__rotulo">ver outros perfis</span></button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+  <dialog class="aviso" id="aviso-psicologos" aria-labelledby="aviso-titulo" data-aviso>
+    <div class="aviso__painel">
+      <h3 class="aviso__titulo" id="aviso-titulo">o cadastro de profissionais ainda não está aberto</h3>
+      <p>Esta página é uma demonstração da Mente em Sintonia. Quando o cadastro abrir, este botão vai levar direto para o formulário de profissionais.</p>
+      <p>Até lá, você pode conhecer a experiência de quem procura atendimento na demonstração interativa.</p>
+      <div class="aviso__acoes">
+        <a class="botao botao--primario" href="#demo" data-aviso-demo><span class="botao__rotulo">ver a demonstração</span></a>
+        <button class="botao botao--secundario" type="button" data-aviso-fechar><span class="botao__rotulo">entendi</span></button>
+      </div>
+    </div>
+  </dialog>
+
+  <p class="sr-only" aria-live="polite" data-anuncio></p>
+</body>
+</html>
